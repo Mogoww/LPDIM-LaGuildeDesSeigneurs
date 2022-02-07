@@ -12,11 +12,12 @@ use App\Service\CharacterServiceInterface;
 class CharacterController extends AbstractController
 {
     public function __construct(private CharacterServiceInterface $characterService)
-    {}
+    {
+    }
 
 
 
-    #[Route('/character', name: 'character', methods:["GET","HEAD"])]
+    #[Route('/character', name: 'character', methods: ["GET", "HEAD"])]
     public function index(): Response
     {
         return $this->json([
@@ -25,11 +26,13 @@ class CharacterController extends AbstractController
         ]);
     }
 
-    #[Route('/character/create', name: 'character_create', methods:["POST","HEAD"])]
+    #[Route('/character/create', name: 'character_create', methods: ["POST", "HEAD"])]
     public function create()
     {
+
+        $this->denyAccessUnlessGranted('characterDisplay',null);
         $character = $this->characterService->create();
-        return new JsonResponse($character -> toArray());
+        return new JsonResponse($character->toArray());
     }
 
 
@@ -37,12 +40,10 @@ class CharacterController extends AbstractController
 
 
 
-    #[Route('/character/display/{identifier}', name: 'character_display',requirements:["identifier"=>"^([a-z0-9]{40})$"] , methods:["GET","HEAD"])]
+    #[Route('/character/display/{identifier}', name: 'character_display', requirements: ["identifier" => "^([a-z0-9]{40})$"], methods: ["GET", "HEAD"])]
     public function display(Character $character): Response
     {
-       return new JsonResponse($character->toArray());
+        $this->denyAccessUnlessGranted('characterDisplay', $character);
+        return new JsonResponse($character->toArray());
     }
-
-
-
 }
