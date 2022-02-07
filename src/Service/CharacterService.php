@@ -29,7 +29,8 @@ class CharacterService implements CharacterServiceInterface
             ->setIntelligence(100)
             ->setLife(14)
             ->setImage('/images/dagnir.jpg')
-            ->setCreation(new \DateTime());
+            ->setCreation(new \DateTime())
+            ->setIdentifier(hash('sha1',uniqid()));
         $this->em->persist($character);
         $this->em->flush();
 
