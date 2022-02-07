@@ -6,17 +6,23 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class CharacterControllerTest extends WebTestCase
 {
+
+    private $client;
+
+    public function setUp(): void
+    {
+        $this->client = static::createClient();
+    }
+
+
     /**
      * Tests redirect index
      */
 
     public function testRedirectIndex()
     {
-        $client = static::createClient();
-        $client->request('GET', '/character');
-
-        $client->getResponse();
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->client->request('GET', '/character');
+        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
     }
     /**
      * Tests index
@@ -24,10 +30,8 @@ class CharacterControllerTest extends WebTestCase
 
     public function testIndex()
     {
-        $client = static::createClient();
-        $client->request('GET', '/character/index');
-        $client->getResponse();
-        $this->assertResponseIsSuccessful();
+        $this->client->request('GET', '/character/index');
+        $this->assertJsonResponse();
     }
 
     /**
@@ -36,30 +40,48 @@ class CharacterControllerTest extends WebTestCase
 
     public function testDisplay()
     {
-        $client = static::createClient();
-        $client->request('GET', '/character/display/bbc451fc6e23c6a53180581d422cbf7975086c49');
+        $this->client->request('GET', '/character/display/bbc451fc6e23c6a53180581d422cbf7975086c49');
 
-        $this->assertJsonResponse($client->getResponse());
+        $this->assertJsonResponse($this->client->getResponse());
     }
 
     /**
      * Tests create
      */
 
-    // public function testCreate()
-    // {
-    //     $client = static::createClient();
-    //     $crawler = $client->request('POST', '/character/create');
+    public function testCreate()
+    {
+        $this->client->request('POST', '/character/create');
 
-    //     $this->assertJsonResponse($client->getResponse());
-    // }
+        $this->assertJsonResponse();
+    }
+
+    /**
+     * Tests inexisting identifier
+     */
+
+    public function testInexistingIdentifier()
+    {
+        $this->client->request('GET', '/character/display/bbc451fc6e23c6a53180581d422cbf7975086c49error');
+
+        $this->assertError404($this->client->getResponse()->getStatusCode());
+    }
 
     /*
     * Asserts that a Response is in json
     */
-    public function assertJsonResponse($response)
+    public function assertJsonResponse()
     {
-        $this->assertEquals(200, $response->getStatusCode());
+        $response = $this->client->getResponse();
+        $this->assertResponseIsSuccessful();
         $this->assertTrue($response->headers->contains('Content-type', 'application/json'), $response->headers);
+    }
+
+    /*
+    * Asserts Error 404
+    */
+    public function assertError404()
+    {
+        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
     }
 }
