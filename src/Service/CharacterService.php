@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class CharacterService implements CharacterServiceInterface
 {
 
-    public function __construct(private CharacterRepository $characterRepository,private EntityManagerInterface $em)
+    public function __construct(private CharacterRepository $characterRepository, private EntityManagerInterface $em)
     {
     }
 
@@ -44,9 +44,30 @@ class CharacterService implements CharacterServiceInterface
     {
         $characterFinal = array();
         $characters = $this->characterRepository->findAll();
-        foreach($characters as $character){
+        foreach ($characters as $character) {
             $characterFinal[] = $character->toArray();
         }
         return $characterFinal;
+    }
+
+    /*
+    * {@inheritdoc}
+    */
+    public function modify(Character $character)
+    {
+        $character
+            ->setKind('Seigneur')
+            ->setName('Dagnir')
+            ->setSurname('Tourmenteur')
+            ->setCaste('Lycanthrope')
+            ->setKnowledge('Sciences')
+            ->setIntelligence(100)
+            ->setLife(14)
+            ->setImage('/images/dagnir.jpg')
+            ->setCreation(new \DateTime());
+        $this->em->persist($character);
+        $this->em->flush();
+
+        return $character;
     }
 }

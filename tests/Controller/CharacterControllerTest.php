@@ -18,16 +18,15 @@ class CharacterControllerTest extends WebTestCase
     /**
      * Tests redirect index
      */
-
     public function testRedirectIndex()
     {
         $this->client->request('GET', '/character');
         $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
     }
+
     /**
      * Tests index
      */
-
     public function testIndex()
     {
         $this->client->request('GET', '/character/index');
@@ -37,7 +36,6 @@ class CharacterControllerTest extends WebTestCase
     /**
      * Tests display
      */
-
     public function testDisplay()
     {
         $this->client->request('GET', '/character/display/bbc451fc6e23c6a53180581d422cbf7975086c49');
@@ -48,7 +46,6 @@ class CharacterControllerTest extends WebTestCase
     /**
      * Tests create
      */
-
     public function testCreate()
     {
         $this->client->request('POST', '/character/create');
@@ -59,12 +56,21 @@ class CharacterControllerTest extends WebTestCase
     /**
      * Tests inexisting identifier
      */
-
     public function testInexistingIdentifier()
     {
         $this->client->request('GET', '/character/display/bbc451fc6e23c6a53180581d422cbf7975086c49error');
 
         $this->assertError404($this->client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * Tests modify
+     */
+    public function testModify()
+    {
+        $this->client->request('PUT', '/character/modify/bbc451fc6e23c6a53180581d422cbf7975086c49');
+
+        $this->assertJsonResponse();
     }
 
     /*
