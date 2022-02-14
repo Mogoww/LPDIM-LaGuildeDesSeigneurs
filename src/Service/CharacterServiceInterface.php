@@ -22,7 +22,17 @@ interface CharacterServiceInterface
     public function modify(Character $character);
 
     /*
-    * Modify the character
+    * Delete the character
     */
     public function delete(Character $character);
+
+    /*
+    * Gets images brandomly
+    */
+    public function getImages(int $number, ?string $kind = null);
+
+    /*
+    * Gets images brandomly using kind
+    */
+    public function getImagesKind(string $kind, int $number);
 }
