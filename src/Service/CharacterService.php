@@ -11,11 +11,12 @@ use Symfony\Component\Form\FormFactoryInterface;
 use LogicException;
 use App\Form\CharacterType;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CharacterService implements CharacterServiceInterface
 {
 
-    public function __construct(private CharacterRepository $characterRepository, private EntityManagerInterface $em,private FormFactoryInterface $formFactory)
+    public function __construct(private CharacterRepository $characterRepository, private EntityManagerInterface $em, private FormFactoryInterface $formFactory, private ValidatorInterface $validator)
     {
     }
 
@@ -44,15 +45,9 @@ class CharacterService implements CharacterServiceInterface
      */
     public function isEntityFilled(Character $character)
     {
-        if (
-            null === $character->getKind() ||
-            null === $character->getName() ||
-            null === $character->getSurname() ||
-            null === $character->getIdentifier() ||
-            null === $character->getCreation() ||
-            null === $character->getModification()
-        ) {
-            throw new UnprocessableEntityHttpException('Missing data for Entity -> ' . json_encode($character->toArray()));
+        $errors = $this->validator->validate($character);
+        if (count($errors) > 0) {
+            throw new UnprocessableEntityHttpException((string) $errors . ' Missing data for Entity -> ' . json_encode($character->toArray()));
         }
     }
 
@@ -97,7 +92,7 @@ class CharacterService implements CharacterServiceInterface
     */
     public function modify(Character $character, string $data)
     {
-        $this->submit($character,CharacterType::class,$data);
+        $this->submit($character, CharacterType::class, $data);
         $this->isEntityFilled($character);
         $character
             ->setModification(new \DateTime());
