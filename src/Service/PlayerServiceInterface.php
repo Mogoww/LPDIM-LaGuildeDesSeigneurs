@@ -15,12 +15,24 @@ interface PlayerServiceInterface
     /*
     * Creates the players
     */
-    public function create();
+    public function create(string $data);
+
+    /*
+    * Checks if the entity has been well filled
+    */
+    public function isEntityFilled(Player $player);
+    
+    /* 
+    * Submits the data to hydrate the object
+    */
+    public function submit(Player $player, $formName, $data);
+
+
 
     /*
     * Modify the players
     */
-    public function modify(Player $player);
+    public function modify(Player $player, string $data);
 
     /*
     * Modify the character
