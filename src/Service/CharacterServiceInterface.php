@@ -18,7 +18,7 @@ interface CharacterServiceInterface
 
     /* 
      * Submits the data to hydrate the object
-     */ 
+     */
     public function submit(Character $character, $formName, $data);
 
 
@@ -46,4 +46,9 @@ interface CharacterServiceInterface
     * Gets images brandomly using kind
     */
     public function getImagesKind(string $kind, int $number);
+
+    /*
+    * Serialize the object (s)
+    */
+    public function serializeJson($data);
 }

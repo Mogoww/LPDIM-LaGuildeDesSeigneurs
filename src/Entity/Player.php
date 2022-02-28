@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PlayerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -55,6 +57,14 @@ class Player
 
     #[ORM\Column(type: 'datetime')]
     private $modification;
+
+    #[ORM\OneToMany(mappedBy: 'player', targetEntity: Character::class)]
+    private $characters;
+
+    public function __construct()
+    {
+        $this->characters = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -134,12 +144,6 @@ class Player
         return $this;
     }
 
-
-
-    public function toArray(){
-        return get_object_vars($this);
-    }
-
     public function getModification(): ?\DateTimeInterface
     {
         return $this->modification;
@@ -151,5 +155,37 @@ class Player
 
         return $this;
     }
+
+    /**
+     * @return Collection|Character[]
+     */
+    public function getCharacters(): Collection
+    {
+        return $this->characters;
+    }
+
+    public function addCharacter(Character $character): self
+    {
+        if (!$this->characters->contains($character)) {
+            $this->characters[] = $character;
+            $character->setPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacter(Character $character): self
+    {
+        if ($this->characters->removeElement($character)) {
+            // set the owning side to null (unless already changed)
+            if ($character->getPlayer() === $this) {
+                $character->setPlayer(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 
 }

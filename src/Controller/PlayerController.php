@@ -5,11 +5,11 @@ namespace App\Controller;
 use App\Entity\Player;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\PlayerServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 
 class PlayerController extends AbstractController
 {
@@ -28,8 +28,8 @@ class PlayerController extends AbstractController
     public function index()
     {
         $this->denyAccessUnlessGranted('playerIndex', null);
-        $player = $this->playerService->getAll();
-        return new JsonResponse($player);
+        $players = $this->playerService->getAll();
+        return JsonResponse::fromJsonString($this->playerService->serializeJson($players));
     }
 
 
@@ -38,15 +38,15 @@ class PlayerController extends AbstractController
     {
         $this->denyAccessUnlessGranted('playerDisplay', null);
         $player = $this->playerService->create($request->getContent());
-        return new JsonResponse($player->toArray());
+        return JsonResponse::fromJsonString($this->playerService->serializeJson($player));
     }
 
     #[Route('/player/modify/{identifier}', name: 'player_modify', requirements: ["identifier" => "^([a-z0-9]{40})$"], methods: ["PUT", "HEAD"])]
-    public function modify(Request $request,Player $player)
+    public function modify(Request $request, Player $player)
     {
         $this->denyAccessUnlessGranted('playerModify', $player);
         $player = $this->playerService->modify($player, $request->getContent());
-        return new JsonResponse($player->toArray());
+        return JsonResponse::fromJsonString($this->playerService->serializeJson($player));
     }
 
     #[Route('/player/delete/{identifier}', name: 'player_delete', requirements: ["identifier" => "^([a-z0-9]{40})$"], methods: ["DELETE", "HEAD"])]
@@ -62,9 +62,10 @@ class PlayerController extends AbstractController
 
 
     #[Route('/player/display/{identifier}', name: 'player_display', requirements: ["identifier" => "^([a-z0-9]{40})$"], methods: ["GET", "HEAD"])]
+    #[Entity("player", expr: "repository.findOneByIdentifier(identifier)")]
     public function display(Player $player): Response
     {
         $this->denyAccessUnlessGranted('playerDisplay', $player);
-        return new JsonResponse($player->toArray());
+        return JsonResponse::fromJsonString($this->playerService->serializeJson($player));
     }
 }

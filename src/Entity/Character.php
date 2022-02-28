@@ -83,6 +83,9 @@ class Character
     #[ORM\Column(type: 'datetime')]
     private $modification;
 
+    #[ORM\ManyToOne(targetEntity: Player::class, inversedBy: 'characters')]
+    private $player;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -171,10 +174,7 @@ class Character
 
         return $this;
     }
-    public function toArray(){
-        return get_object_vars($this);
-    }
-
+    
     public function getKind(): ?string
     {
         return $this->kind;
@@ -219,6 +219,18 @@ class Character
     public function setModification(\DateTimeInterface $modification): self
     {
         $this->modification = $modification;
+
+        return $this;
+    }
+
+    public function getPlayer(): ?Player
+    {
+        return $this->player;
+    }
+
+    public function setPlayer(?Player $player): self
+    {
+        $this->player = $player;
 
         return $this;
     }

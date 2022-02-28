@@ -21,7 +21,7 @@ interface PlayerServiceInterface
     * Checks if the entity has been well filled
     */
     public function isEntityFilled(Player $player);
-    
+
     /* 
     * Submits the data to hydrate the object
     */
@@ -38,4 +38,9 @@ interface PlayerServiceInterface
     * Modify the character
     */
     public function delete(Player $player);
+
+    /*
+    * Serialize the object (s)
+    */
+    public function serializeJson($data);
 }
