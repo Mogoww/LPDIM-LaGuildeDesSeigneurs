@@ -39,7 +39,6 @@ class AppFixtures extends Fixture
 
             $manager->persist($character);
             $manager->persist($player);
-
         }
         $manager->flush();
     }

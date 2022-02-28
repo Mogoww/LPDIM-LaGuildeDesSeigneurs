@@ -23,8 +23,8 @@ class PlayerRepository extends ServiceEntityRepository
     public function findOneByIdentifier($identifier)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p','c')
-            ->leftJoin('p.characters','c')
+            ->andWhere('p', 'c')
+            ->leftJoin('p.characters', 'c')
             ->where('p.identifier = :identifier')
             ->setParameter('identifier', $identifier)
             ->getQuery()

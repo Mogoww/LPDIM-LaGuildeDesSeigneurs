@@ -20,7 +20,6 @@ use Symfony\Component\Serializer\Serializer;
 
 class CharacterService implements CharacterServiceInterface
 {
-
     public function __construct(private CharacterRepository $characterRepository, private EntityManagerInterface $em, private FormFactoryInterface $formFactory, private ValidatorInterface $validator)
     {
     }
@@ -52,7 +51,7 @@ class CharacterService implements CharacterServiceInterface
     {
         $errors = $this->validator->validate($character);
         if (count($errors) > 0) {
-            throw new UnprocessableEntityHttpException((string) $errors . ' Missing data for Entity -> ' . json_encode($character->toArray()));
+            throw new UnprocessableEntityHttpException((string) $errors . ' Missing data for Entity -> ' . json_encode($character));
         }
     }
 

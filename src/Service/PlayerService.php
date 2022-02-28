@@ -17,11 +17,8 @@ use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
-
-
 class PlayerService implements PlayerServiceInterface
 {
-
     public function __construct(private PlayerRepository $playerRepository, private EntityManagerInterface $em, private FormFactoryInterface $formFactory, private ValidatorInterface $validator)
     {
     }
@@ -55,7 +52,7 @@ class PlayerService implements PlayerServiceInterface
     {
         $errors = $this->validator->validate($player);
         if (count($errors) > 0) {
-            throw new UnprocessableEntityHttpException((string) $errors . ' Missing data for Entity -> ' . json_encode($player->toArray()));
+            throw new UnprocessableEntityHttpException((string) $errors . ' Missing data for Entity -> ' . json_encode($player));
         }
     }
 

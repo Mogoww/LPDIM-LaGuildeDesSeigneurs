@@ -31,7 +31,6 @@ class CharacterVoter extends Voter
 
     protected function supports(string $attribute, $subject): bool
     {
-
         if (null !== $subject) {
             return $subject instanceof Character && in_array($attribute, self::ATTRIBUTES);
         }

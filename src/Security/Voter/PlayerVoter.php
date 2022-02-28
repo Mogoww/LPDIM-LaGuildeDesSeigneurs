@@ -4,9 +4,8 @@ namespace App\Security\Voter;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-use Symfony\Component\Security\Core\User\UserInterface;
-use App\Entity\Player;
 
+use App\Entity\Player;
 
 class PlayerVoter extends Voter
 {
@@ -30,7 +29,6 @@ class PlayerVoter extends Voter
 
     protected function supports(string $attribute, $subject): bool
     {
-
         if (null !== $subject) {
             return $subject instanceof Player && in_array($attribute, self::ATTRIBUTES);
         }
@@ -59,7 +57,7 @@ class PlayerVoter extends Voter
                 break;
         }
 
-        throw new LogicException('Invalid attribute : ' . $attribute);
+        throw new \LogicException('Invalid attribute : ' . $attribute);
     }
 
     /*

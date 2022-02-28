@@ -6,13 +6,11 @@ use App\Repository\CharacterRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 #[ORM\Entity(repositoryClass: CharacterRepository::class)]
 #[ORM\Table(name: 'characters')]
-    
+
 class Character
 {
-    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -21,31 +19,31 @@ class Character
     #[ORM\Column(type: 'string', length: 16)]
     #[Assert\NotBlank]
     #[Assert\Length(
-         min : 3,
-         max : 16,
-     )]
+        min : 3,
+        max : 16,
+    )]
     private $name ;
 
     #[ORM\Column(type: 'string', length: 64)]
     #[Assert\NotBlank]
     #[Assert\Length(
-         min : 3,
-         max : 64,
-     )]
+        min : 3,
+        max : 64,
+    )]
     private $surname;
 
     #[ORM\Column(type: 'string', length: 16, nullable: true)]
     #[Assert\Length(
-         min : 3,
-         max : 16,
-     )]
+        min : 3,
+        max : 16,
+    )]
     private $caste;
 
     #[ORM\Column(type: 'string', length: 16, nullable: true)]
     #[Assert\Length(
-         min : 3,
-         max : 16,
-     )]
+        min : 3,
+        max : 16,
+    )]
     private $knowledge;
 
     #[ORM\Column(type: 'integer', nullable: true)]
@@ -65,8 +63,8 @@ class Character
     #[ORM\Column(type: 'string', length: 16)]
      #[Assert\NotBlank]
      #[Assert\Length(
-           min : 3,
-           max : 16,
+         min : 3,
+         max : 16,
      )]
     private $kind;
 
@@ -174,7 +172,7 @@ class Character
 
         return $this;
     }
-    
+
     public function getKind(): ?string
     {
         return $this->kind;

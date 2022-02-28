@@ -16,7 +16,7 @@ interface CharacterServiceInterface
      */
     public function isEntityFilled(Character $character);
 
-    /* 
+    /*
      * Submits the data to hydrate the object
      */
     public function submit(Character $character, $formName, $data);

@@ -6,7 +6,6 @@ use App\Entity\Player;
 
 interface PlayerServiceInterface
 {
-
     /*
     * Gets all the players
     */
@@ -22,7 +21,7 @@ interface PlayerServiceInterface
     */
     public function isEntityFilled(Player $player);
 
-    /* 
+    /*
     * Submits the data to hydrate the object
     */
     public function submit(Player $player, $formName, $data);
