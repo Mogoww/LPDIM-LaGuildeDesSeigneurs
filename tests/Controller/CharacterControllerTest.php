@@ -16,12 +16,19 @@ class CharacterControllerTest extends WebTestCase
         $this->client = static::createClient();
     }
 
-        /**
+    /**
      * Tests create
      */
     public function testCreate()
     {
-        $this->client->request('POST', '/character/create');
+        $this->client->request(
+            'POST',
+            '/character/create',
+            array(),
+            array(),
+            array('CONTENT_TYPE' => 'application/json'),
+            '{"kind":"Dame", "name":"Eldalótë", "surname":"Fleur elfique", "caste":"Elfe", "knowledge":"Arts", "intelligence":120, "life":12, "image":"/images/eldalote.jpg"}'
+        );
         $this->assertJsonResponse();
         $this->defineIdentifier();
         $this->assertIdentifier();
@@ -50,7 +57,7 @@ class CharacterControllerTest extends WebTestCase
      */
     public function testDisplay()
     {
-        $this->client->request('GET', '/character/display/'. self::$identifier);
+        $this->client->request('GET', '/character/display/' . self::$identifier);
 
         $this->assertJsonResponse($this->client->getResponse());
     }
@@ -71,9 +78,25 @@ class CharacterControllerTest extends WebTestCase
      */
     public function testModify()
     {
-        $this->client->request('PUT', '/character/modify/' . self::$identifier);
-        $this->assertJsonResponse();
-        $this->assertIdentifier();
+        //Tests with partial data array
+        $this->client->request(
+            'PUT','/character/modify/' . self::$identifier,
+            array(),//parameters
+            array(),//files
+            array('CONTENT_TYPE' => 'application/json'),//server
+            '{"kind":"Seigneur", "name":"Gorthol"}');
+            $this->assertJsonResponse();
+            $this->assertIdentifier();//Tests with whole content
+            $this->client->request(
+                'PUT',
+                '/character/modify/' . self::$identifier,
+                array(),//parameters
+                array(),//files
+                array('CONTENT_TYPE' => 'application/json'),//server
+                '{"kind":"Seigneur", "name":"Gorthol", "surname":"Heaume de terreur", "caste":"Chevalier", "knowledge":"Diplomatie", "intelligence":110, "life":13, "image":"/images/gorthol.jpg"}');
+                $this->assertJsonResponse();
+                $this->assertIdentifier();
+
     }
 
     /**
@@ -85,18 +108,18 @@ class CharacterControllerTest extends WebTestCase
         $this->assertJsonResponse();
     }
 
-        /**
+    /**
      * Tests images
      */
     public function testImages()
     {
-       //Tests without kind
-       $this->client->request('GET', '/character/images/3');
-       $this->assertJsonResponse();
-       
-       //Tests with kind
-       $this->client->request('GET', '/character/images/dames/3');
-       $this->assertJsonResponse();
+        //Tests without kind
+        $this->client->request('GET', '/character/images/3');
+        $this->assertJsonResponse();
+
+        //Tests with kind
+        $this->client->request('GET', '/character/images/dames/3');
+        $this->assertJsonResponse();
     }
 
 
