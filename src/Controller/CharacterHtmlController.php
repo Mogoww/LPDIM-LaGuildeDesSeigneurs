@@ -10,13 +10,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Service\CharacterServiceInterface;
 
 #[Route('/character/html')]
 class CharacterHtmlController extends AbstractController
 {
 
 
-    public function __construct(private CharacterService $characterService)
+    public function __construct(private CharacterServiceInterface $characterService)
     {
     }
 
@@ -37,10 +38,8 @@ class CharacterHtmlController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($character);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_character_html_index', [], Response::HTTP_SEE_OTHER);
+            $this->characterService->createFromHtml($character);
+            return $this->redirectToRoute('app_character_html_show', array('id' => $character->getId(),));
         }
 
         return $this->renderForm('character_html/new.html.twig', [
