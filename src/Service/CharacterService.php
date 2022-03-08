@@ -120,14 +120,18 @@ class CharacterService implements CharacterServiceInterface
     */
     public function modify(Character $character, string $data)
     {
-        $this->submit($character, CharacterType::class, $data);
-        $this->isEntityFilled($character);
-        $character
-            ->setModification(new \DateTime());
-        $this->em->persist($character);
-        $this->em->flush();
 
-        return $character;
+        return $this->modifyFromHtml($character);
+
+
+        // $this->submit($character, CharacterType::class, $data);
+        // $this->isEntityFilled($character);
+        // $character
+        //     ->setModification(new \DateTime());
+        // $this->em->persist($character);
+        // $this->em->flush();
+
+        // return $character;
     }
 
     /*
@@ -201,6 +205,15 @@ class CharacterService implements CharacterServiceInterface
         $event = new CharacterEvent($character);
         $this->dispatcher->dispatch($event, CharacterEvent::CHARACTER_CREATED);
         $this->isEntityFilled($character);
+        $this->em->persist($character);
+        $this->em->flush();
+        return $character;
+    }
+
+    public function modifyFromHtml(Character $character)
+    {
+        $this->isEntityFilled($character);
+        $character->setModification(new DateTime());
         $this->em->persist($character);
         $this->em->flush();
         return $character;

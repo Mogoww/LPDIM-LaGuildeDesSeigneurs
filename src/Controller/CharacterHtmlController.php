@@ -63,9 +63,8 @@ class CharacterHtmlController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_character_html_index', [], Response::HTTP_SEE_OTHER);
+            $this->characterService->modifyFromHtml($character);
+            return $this->redirectToRoute('app_character_html_index', array('id' => $character->getId(),));
         }
 
         return $this->renderForm('character_html/edit.html.twig', [
@@ -77,7 +76,7 @@ class CharacterHtmlController extends AbstractController
     #[Route('/{id}', name: 'app_character_html_delete', methods: ['POST'])]
     public function delete(Request $request, Character $character, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$character->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $character->getId(), $request->request->get('_token'))) {
             $entityManager->remove($character);
             $entityManager->flush();
         }
