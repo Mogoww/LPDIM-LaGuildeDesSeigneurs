@@ -25,14 +25,14 @@ class CharacterType extends AbstractType
             ->add('kind', TextType::class)
             ->add('creation', DateTimeType::class)
             ->add('identifier', TextType::class)
-            ->add('modification', DateTimeType::class)
-        ;
+            ->add('modification', DateTimeType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Character::class,
+            'allow_extra_fields' => true,
         ]);
     }
 }
