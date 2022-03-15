@@ -37,7 +37,7 @@ class CharacterApiHtmlController extends AbstractController
     }
 
     /**
-     * @Route("/{intelligence}", name="character_api_html_intelligence",requirements={"intelligence" = "\d+"}, methods={"GET"})
+     * @Route("/intelligence/{intelligence}", name="character_api_html_intelligence",requirements={"intelligence" = "^([0-9]{1,3})$"}, methods={"GET"})
      */
     public function indexIntelligence(int $intelligence)
     {

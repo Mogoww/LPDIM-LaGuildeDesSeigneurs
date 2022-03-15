@@ -19,6 +19,9 @@ class CharacterRepository extends ServiceEntityRepository
         parent::__construct($registry, Character::class);
     }
 
+    /**
+     * Get one by identifier
+     */
     public function findOneByIdentifier($identifier)
     {
         return $this->createQueryBuilder('c')
@@ -27,19 +30,22 @@ class CharacterRepository extends ServiceEntityRepository
             ->where('c.identifier = :identifier')
             ->setParameter('identifier', $identifier)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
 
+
+    /**
+     * Get all Character and players by intelligence in Character
+     */
     public function findAllByIntelligence($intelligence)
     {
         return $this->createQueryBuilder('c')
-            ->select('c')
+            ->select('c','p')
+            ->leftJoin('c.player', 'p')
             ->where('c.intelligence >= :intelligence')
             ->setParameter('intelligence', $intelligence)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
 

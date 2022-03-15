@@ -59,7 +59,7 @@ class CharacterController extends AbstractController
         return JsonResponse::fromJsonString($this->characterService->serializeJson($characters));
     }
 
-    #[Route('/character/intelligence/{intelligence}', name: 'character_index_intelligence', requirements: ["intelligence" => "\d+"], methods: ["GET", "HEAD"])]
+    #[Route('/character/intelligence/{intelligence}', name: 'character_index_intelligence', requirements: ["intelligence" => "^([0-9]{1,3})$"], methods: ["GET", "HEAD"])]
     /**
      * Display the character by intelligence contained in the url
      * 

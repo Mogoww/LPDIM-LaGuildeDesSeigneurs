@@ -58,8 +58,13 @@ class CharacterControllerTest extends WebTestCase
     public function testIntelligence()
     {
         $this->client->request('GET', '/character/intelligence/120');
-
         $this->assertJsonResponse();
+
+        $this->client->request('GET', '/character/html/intelligence/120');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+
+        $this->client->request('GET', '/character/api-html/intelligence/120');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
     /**
