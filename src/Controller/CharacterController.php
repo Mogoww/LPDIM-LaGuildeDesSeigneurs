@@ -59,6 +59,14 @@ class CharacterController extends AbstractController
         return JsonResponse::fromJsonString($this->characterService->serializeJson($characters));
     }
 
+    #[Route('/character/intelligence/{intelligence}', name: 'character_index_intelligence', requirements: ["intelligence" => "\d+"], methods: ["GET", "HEAD"])]
+    public function indexIntelligence(int $intelligence)
+    {
+        $this->denyAccessUnlessGranted('characterIntelligence', null);
+        $characters = $this->characterService->getByIntelligence($intelligence);
+        return JsonResponse::fromJsonString($this->characterService->serializeJson($characters));
+    }
+
     #[Route('/character/display/{identifier}', name: 'character_display', requirements: ["identifier" => "^([a-z0-9]{40})$"], methods: ["GET", "HEAD"])]
     #[Entity("character", expr: "repository.findOneByIdentifier(identifier)")]
     /**

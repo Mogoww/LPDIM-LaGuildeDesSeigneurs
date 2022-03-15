@@ -35,6 +35,11 @@ class CharacterApiHtmlController extends AbstractController
             'characters' => $response->toArray(),
         ]);
     }
+
+
+
+
+
     /**
      * @Route("/new", name="character_api_html_new", methods={"GET","POST"})
      */

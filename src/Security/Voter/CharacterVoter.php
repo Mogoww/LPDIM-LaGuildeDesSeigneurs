@@ -16,6 +16,7 @@ class CharacterVoter extends Voter
     public const CHARACTER_INDEX = 'characterIndex';
     public const CHARACTER_MODIFY = 'characterModify';
     public const CHARACTER_DELETE = 'characterDelete';
+    public const CHARACTER_INTELLIGENCE = 'characterIntelligence';
 
 
 
@@ -26,6 +27,7 @@ class CharacterVoter extends Voter
         self::CHARACTER_INDEX,
         self::CHARACTER_MODIFY,
         self::CHARACTER_DELETE,
+        self::CHARACTER_INTELLIGENCE
 
     );
 
@@ -46,6 +48,7 @@ class CharacterVoter extends Voter
         switch ($attribute) {
             case self::CHARACTER_DISPLAY:
             case self::CHARACTER_INDEX:
+            case self::CHARACTER_INTELLIGENCE:
                 return $this->canDisplay();
                 break;
             case self::CHARACTER_CREATE:

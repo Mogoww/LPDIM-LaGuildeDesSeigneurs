@@ -28,6 +28,11 @@ interface CharacterServiceInterface
     public function getAll();
 
     /*
+    * Gets the characters by intelligence
+    */
+    public function getByIntelligence( string $data);
+
+    /*
     * Modify the character
     */
     public function modify(Character $character, string $data);
@@ -60,5 +65,4 @@ interface CharacterServiceInterface
      *  Modifies the character from html form
      */
     public function modifyFromHtml(Character $character);
-
 }

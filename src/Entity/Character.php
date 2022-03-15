@@ -47,6 +47,11 @@ class Character
     private $knowledge;
 
     #[ORM\Column(type: 'integer', nullable: true, name:"gls_intelligence")]
+    #[Assert\Length(
+        min : 0,
+        max : 3,
+        maxMessage : 'Your first name cannot be longer than 255 characters',
+    )]
     private $intelligence ;
 
     #[ORM\Column(type: 'integer', nullable: true, name:"gls_life")]
