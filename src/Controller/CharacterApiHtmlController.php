@@ -36,7 +36,19 @@ class CharacterApiHtmlController extends AbstractController
         ]);
     }
 
-
+    /**
+     * @Route("/{intelligence}", name="character_api_html_intelligence",requirements={"intelligence" = "\d+"}, methods={"GET"})
+     */
+    public function indexIntelligence(int $intelligence)
+    {
+        $response = $this->client->request(
+            'GET',
+            'http://localhost:80/character/intelligence/'.$intelligence
+        );
+        return $this->render('character_api_html/index.html.twig', [
+            'characters' => $response->toArray(),
+        ]);
+    }
 
 
 

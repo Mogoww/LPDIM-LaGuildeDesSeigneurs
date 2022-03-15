@@ -60,6 +60,30 @@ class CharacterController extends AbstractController
     }
 
     #[Route('/character/intelligence/{intelligence}', name: 'character_index_intelligence', requirements: ["intelligence" => "\d+"], methods: ["GET", "HEAD"])]
+    /**
+     * Display the character by intelligence contained in the url
+     * 
+     * @OA\Parameter(
+     *      name="intelligence",
+     *      in="path",
+     *      description="intelligence for the Character",
+     *      required=true,
+     * )
+     * @OA\Response(
+     *      response=200,
+     *      description="Success",
+     *      @Model(type=Character::class),
+     * )
+     * @OA\Response(
+     *      response=403,
+     *      description="Access denied",
+     * )
+     * @OA\Response(
+     *      response=404,
+     *      description="Not Found",
+     * )
+     * @OA\Tag(name="Character")
+     */
     public function indexIntelligence(int $intelligence)
     {
         $this->denyAccessUnlessGranted('characterIntelligence', null);
@@ -131,7 +155,7 @@ class CharacterController extends AbstractController
         return JsonResponse::fromJsonString($this->characterService->serializeJson($character));
     }
 
-//MODIFY
+    //MODIFY
     /**
      * @OA\Response(
      *     response=200,
@@ -167,7 +191,7 @@ class CharacterController extends AbstractController
         return JsonResponse::fromJsonString($this->characterService->serializeJson($character));
     }
 
-    
+
     #[Route('/character/delete/{identifier}', name: 'character_delete', requirements: ["identifier" => "^([a-z0-9]{40})$"], methods: ["DELETE", "HEAD"])]
     //DELETE
     /**
