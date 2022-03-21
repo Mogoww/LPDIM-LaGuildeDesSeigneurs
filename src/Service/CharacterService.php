@@ -126,6 +126,32 @@ class CharacterService implements CharacterServiceInterface
     /*
     * {@inheritdoc}
     */
+    public function getByLife(string $data)
+    {
+        return $this->characterRepository->findAllByLife($data);
+    }
+
+
+    /*
+    * {@inheritdoc}
+    */
+    public function getByCaste(string $data)
+    {
+        return $this->characterRepository->findAllByCaste($data);
+    }
+
+
+    /*
+    * {@inheritdoc}
+    */
+    public function getByKnowledge(string $data)
+    {
+        return $this->characterRepository->findAllByKnowledge($data);
+    }
+
+    /*
+    * {@inheritdoc}
+    */
     public function modify(Character $character, string $data)
     {
 

@@ -33,6 +33,21 @@ interface CharacterServiceInterface
     public function getByIntelligence( string $data);
 
     /*
+    * Gets the characters by Life
+    */
+    public function getByLife( string $data);
+
+        /*
+    * Gets the characters by Knowledge
+    */
+    public function getByKnowledge( string $data);
+
+          /*
+    * Gets the characters by Caste
+    */
+    public function getByCaste( string $data);
+
+    /*
     * Modify the character
     */
     public function modify(Character $character, string $data);

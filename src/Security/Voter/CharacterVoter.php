@@ -17,6 +17,11 @@ class CharacterVoter extends Voter
     public const CHARACTER_MODIFY = 'characterModify';
     public const CHARACTER_DELETE = 'characterDelete';
     public const CHARACTER_INTELLIGENCE = 'characterIntelligence';
+    public const CHARACTER_LIFE = 'characterLife';
+    public const CHARACTER_CASTE = 'characterCaste';
+    public const CHARACTER_KNOWLEDGE = 'characterKnowledge';
+
+
 
 
 
@@ -27,7 +32,11 @@ class CharacterVoter extends Voter
         self::CHARACTER_INDEX,
         self::CHARACTER_MODIFY,
         self::CHARACTER_DELETE,
-        self::CHARACTER_INTELLIGENCE
+        self::CHARACTER_INTELLIGENCE,
+        self::CHARACTER_LIFE,
+        self::CHARACTER_CASTE,
+        self::CHARACTER_KNOWLEDGE
+
 
     );
 
@@ -49,6 +58,9 @@ class CharacterVoter extends Voter
             case self::CHARACTER_DISPLAY:
             case self::CHARACTER_INDEX:
             case self::CHARACTER_INTELLIGENCE:
+            case self::CHARACTER_LIFE:
+            case self::CHARACTER_CASTE:
+            case self::CHARACTER_KNOWLEDGE:
                 return $this->canDisplay();
                 break;
             case self::CHARACTER_CREATE:
