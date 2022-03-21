@@ -42,13 +42,14 @@
             </tr>
         </tbody>
     </table>
+    <h1>Character</h1>
+        <div class="d-flex flex-wrap">
+                {% for character in player.characters %}
+                        {{ include('character_api_html/_show.html.twig') }}
 
-        {% for character in player.characters %}
-                {{ include('character_api_html/show_include.html.twig') }}
+                {% endfor %}
 
-        {% endfor %}
-
-
+        </div>
 
 
 
