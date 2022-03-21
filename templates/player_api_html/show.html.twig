@@ -45,8 +45,9 @@
     <h1>Character</h1>
         <div class="d-flex flex-wrap">
                 {% for character in player.characters %}
+                <a class="text-decoration-none text-reset"  href="{{ path('character_api_html_show', {'identifier': character.identifier}) }}">
                         {{ include('character_api_html/_show.html.twig') }}
-
+</a>
                 {% endfor %}
 
         </div>

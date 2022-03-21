@@ -14,6 +14,6 @@ class Format_Identifier extends AbstractExtension
     public function format_identifier(string $identifier): string
     {
        
-        return substr(chunk_split($identifier, 4, '-'), 0, -1);;
+        return strtoupper(rtrim(chunk_split($identifier, 4, "-"), "-"));
     }
 }
